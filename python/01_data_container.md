@@ -61,9 +61,19 @@ ___
     key와 value를 함께 접근하는 방법
 
     ```python
-    for key, value in enumerate(dic):
+    for a, b in enumerate(dic):
     ```
 
+    > 여기서 a는 0, 1, 2, 3, 4를 의미하고 b는 key값들을 의미한다
+    
+    .items()를 활용할 수 있다.
+    
+    ```python
+    for key, value in dic.items(): 
+            if value == 50:
+                return key
+    ```
+    
     
 
 ___
