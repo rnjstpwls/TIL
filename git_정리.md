@@ -94,3 +94,36 @@ $ git push origin master
   `git pull origin master`
 
   해당 루틴으로 진행하면 끝!
+
+___
+
+#### 20200731 추가
+
+```bash
+# 버전관리
+$ git init
+$ git add .
+$ git commit -m 'add a.txt'
+
+
+# 상태확인
+$ git status
+
+
+$ git log
+한줄로 보고싶을때
+$ git log --oneline
+
+과거의기록과 최근에 수정된 기록이 어떻게 다른지 보고싶을 때
+$ git diff
+
+# 되돌리기
+빼고싶을때 (add 햇는데 취소하는법)
+(use "git restore --staged <file>..." to unstage)
+$ git restore --staged b.txt
+
+(commit 햇는데 수정하는법) -> 웬만하면 쓰지말자. commit은 신중하게 하자.
+$ git commit --amend
+맨위에꺼만 수정가능
+
+```
