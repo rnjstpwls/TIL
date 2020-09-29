@@ -116,4 +116,55 @@
 
      **주의** auth_logout의 첫번째 인자는 request 이다.
 
+  8. index 생성
+  
+     ```python
+     from django.contrib.auth import get_user_model
      
+     User = get_user_model()
+     users = User.objects.all()
+     ```
+  
+  9. delete( 계정삭제 )
+  
+  10. update (계정정보변경)
+  
+      update는 UserChangeForm을 사용할 것이기에 models.py 에서 새로 생성할 필요는 없다.
+  
+      하지만 이렇게 할 경우 권한까지 모두 설정이 가능하기에 Custom해서 사용해야 한다.
+  
+      forms.py에서 작업한다. CustomUserChangeForm 을 제작하고 fields에 first_name, last_name, email 정도 작업해준다.
+  
+      views.py에서 작업할 때 instance=request.user 로 한다.
+  
+  11. pw change
+  
+      pw change form은 update에서 이미 링크가 생성되어있다. 그래서 url은 부조건 accounts/password/ 로 한다.
+  
+      views.py에서 이미 제작된 PasswordChangeForm을 import 해서 사용한다.
+  
+      계정을 변경하고 변경된 정보를 업데이트해야되기때문에 `update_session_auth_hash` 가 필요하다
+  
+      `from django.contrib.auth import update_session_auth_hash`
+  
+      **중요** PasswordChangeForm의 첫번째 인자는 request.user 이다.
+  
+      **중요** update_session_auth_hash의 첫번째 인자는 request, 두번째 인자는 request.user 이다.
+  
+      ```python
+      def password(request):
+          if request.method == "POST":
+              form = PasswordChangeForm(request.user, request.POST)
+              if form.is_valid():
+                  form.save()
+                  update_session_auth_hash(request, request.user)
+                  return redirect('accounts:index')
+          else:
+              form = PasswordChangeForm(request.user)
+          context = {
+              'form': form,
+          }
+          return render(request, 'accounts/password.html', context)
+      ```
+  
+      
