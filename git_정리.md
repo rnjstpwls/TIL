@@ -172,3 +172,132 @@ ___
 
 ___
 
+#### 201016 추가
+GIT banch
+
+
+
+(협업/분업) => 이상적인 개발흐름
+
+
+
+
+
+두 사람이 어떻게 코드를 나누고 그것을 합치는가
+
+
+
+가정) 역할부여
+
+A : 리더(PL), B : 조원
+
+1. 프로그램을시작할 수 있도록 리더가 첫 커밋을 찍어둔다. 그리고 그것을 공유할 수 있는 사이트에 공유한다.
+2. 그리고 B에게 프로젝트 권한을 부여해 준다.(Maintainer)
+3. 그리고 B가 클론을 떠서 가져온다.
+4. 가정) nav bar를 변경한다고 가정
+5. `git branch feature/nav` 로 branch 생성
+6. `git branch` 로 생성되었는지 확인
+7. `git switch feature/nav` upload할 git 변경
+8. `git add . `
+9. `git commit -m 'nav info fix'`
+
+
+
+B는 footer를 수정한다고 가정.
+
+1. `git branch feature/footer`
+2. `git switch feature/footer`
+
+3. add commit
+
+
+
+##### GIT LAB 이 가지고 있는 기능 사용
+
+feature/nav 라는 branch와 feature/footer 라는 branch를 gitlab에 upload
+
+A
+
+`git push origin feature/nav`
+
+feature/nav라는 branch가 upload됨.
+
+but master에는 변화가 없다.
+
+새롭게 코드가 추가된건 feature/nav임
+
+
+
+B
+
+`git push origin feature/footer`
+
+
+
+총 3개의 branch가 있다.
+
+gitlab 사이트에서 branch누르고 `비교` 눌러보면 원래코드에서 어디가 어떻게 변경되었는지 확인할 수 있다.
+
+`머지 리퀘스트(MR) 만들기`를 누르면 master로 병합해달라는 요청을 보낼 수 있다.
+
+`merge` 버튼을 누르면 최종으로 통합된다. (master 로 합쳐지고 기존 branch는 삭제시키면 된다.)
+
+이제 각각 A. B 사용자가 최신 master를 받아와야한다.
+
+A
+
+`git switch master`
+
+`git pull origin master`
+
+
+
+`git branch -d feature/nav` feature branch 삭제
+
+
+
+B도 반복
+
+
+
+___
+
+
+
+### 충돌이 나는 상황을 가정
+
+가정) A, B가 같이 Title 정보를 수정한다고 가정
+
+A
+
+`git branch feature/title`
+
+`git switch feature/title`
+
+add commit
+
+
+
+B
+
+`git branch feature/title-ko`
+
+`git switch feature/title-ko`
+
+add commit
+
+`git push origin feature/title-ko`
+
+
+
+A는 정상적으로 merge되지만 B를 머지요청보내면
+
+`! 머지 충돌이 있습니다`
+
+충돌이 난 경우 회의를 통해 택 1을 해야한다.
+
+다시 commit을 하고 (사이트에서 바로 가능함)
+
+새로고침을 하면 이제 머지할수있다고 뜸.
+___
+
